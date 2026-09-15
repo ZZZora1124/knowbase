@@ -1,0 +1,27 @@
+.svn
+.tmp
+.download
+output
+.*.swp
+.*.swo
+.idea
+.baidu-cc
+.DS_Store
+
+# build artifacts (root-built binaries)
+/knowbase
+/knowbase-client
+
+# zulu sample/scratch
+.zulu
+
+# worktrees
+.worktrees
+
+# Python caches in skill scripts
+__pycache__/
+*.pyc
+
+# packaged skill zips
+resource/skills/*.zip
+

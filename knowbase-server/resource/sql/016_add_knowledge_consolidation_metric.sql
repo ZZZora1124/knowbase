@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS `knowledge_consolidation_metric` (
+  `id`             BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `platform`       VARCHAR(64)  NOT NULL COMMENT '平台名称',
+  `username`       VARCHAR(128) NOT NULL COMMENT '操作用户',
+  `kb_uuid`        VARCHAR(64)  NOT NULL COMMENT '外脑隔离ID',
+  `op_type`        VARCHAR(16)  NOT NULL COMMENT '操作类型: query / warmup',
+  `input_tokens`   INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '输入token数',
+  `output_tokens`  INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '输出token数',
+  `total_tokens`   INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '总token数',
+  `model`          VARCHAR(128) NOT NULL DEFAULT '' COMMENT '知识沉淀使用的模型',
+  `duration_s`     INT UNSIGNED NOT NULL COMMENT '耗时（秒）',
+  `page_count`     INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '写入page数',
+  `success`        TINYINT(1)   NOT NULL DEFAULT 1 COMMENT '是否成功',
+  `error_message`  VARCHAR(512) COMMENT '失败原因',
+  `created_at`     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX `idx_kb_uuid`    (`kb_uuid`),
+  INDEX `idx_op_type`    (`op_type`),
+  INDEX `idx_username`   (`username`),
+  INDEX `idx_model`      (`model`),
+  INDEX `idx_created_at` (`created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='知识沉淀性能指标表';

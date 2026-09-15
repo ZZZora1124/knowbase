@@ -1,0 +1,79 @@
+# 数据库配置（通过环境变量读取连接字符串）
+dbCfg:
+  connection: "KL_DB_CONNECTION" # 环境变量Key
+
+# 缓存配置
+cacheConfig:
+  redis:
+    addr: "10.27.143.47:8379"
+    password: "KL_REDIS_PASSWD" # 环境变量Key
+    db: 1
+
+# BOS对象存储配置
+bosConfig:
+  ak: KL_BOS_AK # 环境变量Key
+  sk: KL_BOS_SK # 环境变量Key
+  bucket: knowbase-server
+  endpoint: bj.bcebos.com
+
+# 认证服务配置
+authentication:
+  url: "http://10.11.157.225:8061" # 环境变量Key
+  clientId: "KL_AUTHENTICATION_CLIENT_ID" # 环境变量Key
+  clientSecret: "KL_AUTHENTICATION_CLIENT_SECRET" # 环境变量Key
+  retryCount: 2
+  timeout: 5 # 秒
+
+# UUAP API配置
+uuap:
+  url: "https://uuap.baidu.com/uic" # 环境变量Key
+  clientId: "KL_UUAP_CLIENT_ID" # 环境变量Key
+  clientSecret: "KL_UUAP_CLIENT_SECRET" # 环境变量Key
+  retryCount: 2
+  timeout: 5 # 秒
+
+# 如流API配置
+infoflow:
+  url: "http://apiin.im.baidu.com"
+  appKey: "KL_INFOFLOW_APP_KEY" # 环境变量Key
+  appSecret: "KL_INFOFLOW_APP_SECRET" # 环境变量Key
+  retryCount: 2
+  timeout: 5 # 秒
+  cleanup:
+    enabled: true                      # 是否启用定时清理
+    cron: "0 2 * * *"                  # cron表达式，默认每天凌晨2点执行
+    retention_days: 90                 # 保留天数，删除90天之前的消息
+    lock_expire_seconds: 1800          # 分布式锁过期时间（秒），默认30分钟
+  groupCacheRefresh:
+    enabled: true
+    cron: "31 14 * * *"
+
+# Agent Webhook配置（知识应用推送）
+# 用于将知识应用变更通知到Agent服务端
+agentWebhooks:
+# 示例配置（根据实际Agent配置修改）
+# - agentCode: "agent-example"          # Agent唯一标识
+#   webhookUrl: "http://agent.example.com/api/knowledge/callback"
+#   headers:                            # 可选，自定义请求头
+#     X-Agent-Token: "token-value"
+#   timeout: 30                         # 超时时间(秒)
+#   retryCount: 3                       # 重试次数
+#   retryDelay: 1                       # 重试间隔(秒)
+#   enabled: true                       # 是否启用
+
+# 日志配置
+log:
+  level: debug  # debug, info, warn, error
+  file_path: logs/knowbase.log
+  max_size: 100      # MB
+  max_backups: 10
+  max_age: 30        # days
+  compress: true
+
+# context-map配置
+contextMap:
+  baseURL: "http://10.11.157.225:8151"
+  platformToken: "KL_CONTEXTMAP_TOKEN" # 环境变量Key
+  timeout: 10 # 秒
+  retryCount: 1 # 重试次数
+  retryDelayMs: 200 # 重试间隔(毫秒)
