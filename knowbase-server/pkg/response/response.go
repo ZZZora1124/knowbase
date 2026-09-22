@@ -66,16 +66,22 @@ func getHTTPStatusCode(code errors.ErrorCode) int {
 	switch code {
 	case errors.ErrCodeSuccess:
 		return http.StatusOK
-	case errors.ErrCodeInvalidParam, errors.ErrCodeInvalidKnowledgebaseName, errors.ErrCodeInvalidVisibility:
+	case errors.ErrCodeInvalidParam, errors.ErrCodeInvalidKnowledgebaseName, errors.ErrCodeInvalidVisibility, errors.ErrCodeInvalidKnowledgeType:
 		return http.StatusBadRequest
+	case errors.ErrCodeFileTooLarge:
+		return http.StatusRequestEntityTooLarge
 	case errors.ErrCodeUnauthorized, errors.ErrCodeInvalidToken, errors.ErrCodeTokenExpired:
 		return http.StatusUnauthorized
 	case errors.ErrCodeForbidden, errors.ErrCodeNoPermission, errors.ErrCodeNotKnowledgebaseMember, errors.ErrCodeNotKnowledgebaseOwner:
 		return http.StatusForbidden
 	case errors.ErrCodeNotFound, errors.ErrCodeProjectNotFound, errors.ErrCodeKnowledgeNotFound, errors.ErrCodeKnowledgebaseNotFound:
 		return http.StatusNotFound
+	case errors.ErrCodeUserNotFound, errors.ErrCodeDepartmentNotFound, errors.ErrCodeEmailGroupNotFound, errors.ErrCodeChatGroupNotFound:
+		return http.StatusNotFound
 	case errors.ErrCodeAlreadyExists, errors.ErrCodeProjectAlreadyExists, errors.ErrCodeKnowledgeAlreadyExists, errors.ErrCodeKnowledgebaseAlreadyExists:
 		return http.StatusConflict
+	case errors.ErrCodeInfoFlowAPIError:
+		return http.StatusBadGateway
 	default:
 		return http.StatusInternalServerError
 	}
